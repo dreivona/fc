@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Magazyn i Księgowość</title>
+</head>
+<body>
+    <h1>Stan magazynu i saldo</h1>
+    <p>Saldo: {{ saldo }} zł</p>
+
+    <h2>Zakup</h2>
+    <form method="POST">
+        <input type="hidden" name="operacja" value="zakup">
+        Produkt: <input type="text" name="produkt">
+        Cena: <input type="number" step="0.01" name="cena">
+        Liczba: <input type="number" name="liczba">
+        <button type="submit">Zatwierdź zakup</button>
+    </form>
+
+    <h2>Sprzedaż</h2>
+    <form method="POST">
+        <input type="hidden" name="operacja" value="sprzedaz">
+        Produkt: <input type="text" name="produkt">
+        Cena: <input type="number" step="0.01" name="cena">
+        Liczba: <input type="number" name="liczba">
+        <button type="submit">Zatwierdź sprzedaż</button>
+    </form>
+
+    <h2>Zmiana salda</h2>
+    <form method="POST">
+        <input type="hidden" name="operacja" value="saldo">
+        Komentarz: <input type="text" name="komentarz">
+        Wartość: <input type="number" step="0.01" name="wartosc">
+        <button type="submit">Zmień saldo</button>
+    </form>
+
+    <p><a href="{{ url_for('historia_view') }}">Zobacz historię operacji</a></p>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Historia operacji</title>
+</head>
+<body>
+    <h1>Historia operacji</h1>
+    <ul>
+        {% for linia in wynik %}
+            <li>{{ linia }}</li>
+        {% endfor %}
+    </ul>
+    <p><a href="{{ url_for('index') }}">← Powrót</a></p>
+</body>
+</html>
