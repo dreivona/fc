@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Historia operacji</title>
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <style>
+        body {
+            padding: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-primary">Historia operacji</h1>
+        <ul class="timeline">
+            {% for linia in historia %}
+                <li class="timeline-item">{{ linia }}</li>
+            {% endfor %}
+        </ul>
+        <a class="btn btn-link" href="{{ url_for('index') }}">Powrót do strony głównej</a>
+    </div>
+</body>
+</html>
