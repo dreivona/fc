@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Historia operacji</title>
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+</head>
+<body class="container p-4">
+    <h1 class="text-primary">Historia operacji</h1>
+
+    {% if blad %}
+        <div class="toast toast-error">
+            {{ blad }}
+        </div>
+    {% endif %}
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Typ</th>
+                <th>Szczegóły</th>
+                <th>Czas</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entry in historia %}
+            <tr>
+                <td>{{ loop.index0 }}</td>
+                <td>{{ entry.typ }}</td>
+                <td>{{ entry.szczegoly }}</td>
+                <td>{{ entry.timestamp.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ url_for('index') }}" class="btn btn-link">Wróć</a>
+</body>
+</html>

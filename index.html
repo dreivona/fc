@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Zarządzanie Firmą</title>
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+</head>
+<body class="container p-4">
+    <h1 class="text-primary">Panel Główny</h1>
+
+    <div class="columns">
+        <div class="column col-6">
+            <h3>Saldo: <span class="label label-success">{{ saldo }} zł</span></h3>
+            <h4>Magazyn:</h4>
+            <ul class="menu">
+                {% for produkt, ilosc in magazyn.items() %}
+                    <li>{{ produkt }}: {{ ilosc }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="column col-6">
+            <!-- Formularz zakupu -->
+            <form action="{{ url_for('zakup') }}" method="post" class="form-group">
+                <h4>Zakup</h4>
+                <input class="form-input" type="text" name="produkt" placeholder="Nazwa produktu" required>
+                <input class="form-input" type="number" name="cena" placeholder="Cena jednostkowa" step="0.01" required>
+                <input class="form-input" type="number" name="ilosc" placeholder="Ilość" required>
+                <button class="btn btn-primary" type="submit">Kup</button>
+            </form>
+
+            <!-- Formularz sprzedaży -->
+            <form action="{{ url_for('sprzedaz') }}" method="post" class="form-group mt-2">
+                <h4>Sprzedaż</h4>
+                <input class="form-input" type="text" name="produkt" placeholder="Nazwa produktu" required>
+                <input class="form-input" type="number" name="ilosc" placeholder="Ilość" required>
+                <button class="btn btn-success" type="submit">Sprzedaj</button>
+            </form>
+
+            <!-- Formularz zmiany salda -->
+            <form action="{{ url_for('zmien_saldo') }}" method="post" class="form-group mt-2">
+                <h4>Zmiana salda</h4>
+                <input class="form-input" type="number" name="kwota" placeholder="Kwota (może być ujemna)" step="0.01" required>
+                <button class="btn btn-warning" type="submit">Zmień saldo</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="mt-4">
+        <a href="{{ url_for('historia_view') }}" class="btn btn-link">Zobacz historię operacji</a>
+    </footer>
+</body>
+</html>
