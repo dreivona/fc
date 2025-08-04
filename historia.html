@@ -28,8 +28,8 @@
             <tr>
                 <td>{{ loop.index0 }}</td>
                 <td>{{ entry.typ }}</td>
-                <td>{{ entry.szczegoly }}</td>
-                <td>Entry #{{ entry.id }}</td>
+                <td>{{ entry.opis }}</td>
+                <td>{{ entry.timestamp.strftime("%Y-%m-%d %H:%M:%S") }}</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -38,9 +38,9 @@
     <a href="{{ url_for('index') }}" class="btn btn-link">Wróć</a>
 </body>
 </html>
-    </table>
 
     <a href="{{ url_for('index') }}" class="btn btn-link">Wróć</a>
 </body>
 
 </html>
+
