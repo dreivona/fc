@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, Blueprint
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from datetime import datetime  # Add this line
+from datetime import datetime 
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///firma.db'
@@ -115,3 +115,4 @@ def historia(start=None, end=None):
 
 if __name__ == "__main__":
     app.run(debug=True)
+
