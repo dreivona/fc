@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, Blueprint
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from datetime import datetime  # Add this line
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///firma.db'
@@ -21,9 +22,11 @@ class Magazyn(db.Model):
     nazwa = db.Column(db.String(100), unique=True, nullable=False)
     ilosc = db.Column(db.Integer, nullable=False)
 
-class Historia(db.Model):
+class Historia(db.Model):  # Updated model
     id = db.Column(db.Integer, primary_key=True)
     opis = db.Column(db.Text, nullable=False)
+    typ = db.Column(db.String(50), nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
 with app.app_context():
     db.create_all()
@@ -56,7 +59,10 @@ def index():
                         produkt.ilosc += ilosc
                     else:
                         db.session.add(Magazyn(nazwa=nazwa, ilosc=ilosc))
-                    db.session.add(Historia(opis=f"Zakup {ilosc} x {nazwa} po {cena} zł"))
+                    db.session.add(Historia(  # Updated
+                        opis=f"Zakup {ilosc} x {nazwa} po {cena} zł",
+                        typ="Zakup"
+                    ))
                     db.session.commit()
                 else:
                     flash("Za mało środków na koncie.")
@@ -70,7 +76,10 @@ def index():
                 if produkt and produkt.ilosc >= ilosc:
                     produkt.ilosc -= ilosc
                     saldo_obj.wartosc += cena * ilosc
-                    db.session.add(Historia(opis=f"Sprzedaż {ilosc} x {nazwa} po {cena} zł"))
+                    db.session.add(Historia(  # Updated
+                        opis=f"Sprzedaż {ilosc} x {nazwa} po {cena} zł",
+                        typ="Sprzedaż"
+                    ))
                     db.session.commit()
                 else:
                     flash("Brak produktu w magazynie lub za mało sztuk.")
@@ -78,7 +87,10 @@ def index():
             elif akcja == "saldo":
                 zmiana = float(request.form["zmiana"])
                 saldo_obj.wartosc += zmiana
-                db.session.add(Historia(opis=f"Zmiana salda o {zmiana} zł"))
+                db.session.add(Historia(  # Updated
+                    opis=f"Zmiana salda o {zmiana} zł",
+                    typ="Saldo"
+                ))
                 db.session.commit()
 
         except Exception as e:
