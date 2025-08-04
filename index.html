@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Zarządzanie Firmą</title>
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+</head>
+<body class="container p-4">
+    <h1 class="text-primary">Panel Główny</h1>
+
+    <!-- Wyświetl komunikaty błędów -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="toast toast-error">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="columns">
+        <div class="column col-6">
+            <h3>Saldo: <span class="label label-success">{{ saldo }} zł</span></h3>
+            <h4>Magazyn:</h4>
+            <ul class="menu">
+                {% for item in magazyn %}
+                    <p>{{ item.nazwa }}: {{ item.ilosc }}</p>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="column col-6">
+            <!-- Formularz zakupu -->
+            <form method="post" class="form-group">
+                <h4>Zakup</h4>
+                <input type="hidden" name="akcja" value="zakup">
+                <input class="form-input" type="text" name="nazwa" placeholder="Nazwa produktu" required>
+                <input class="form-input" type="number" name="cena" placeholder="Cena jednostkowa" step="0.01" required>
+                <input class="form-input" type="number" name="ilosc" placeholder="Ilość" required>
+                <button class="btn btn-primary" type="submit">Kup</button>
+            </form>
+
+            <!-- Formularz sprzedaży -->
+            <form method="post" class="form-group mt-2">
+                <h4>Sprzedaż</h4>
+                <input type="hidden" name="akcja" value="sprzedaz">
+                <input class="form-input" type="text" name="nazwa" placeholder="Nazwa produktu" required>
+                <input class="form-input" type="number" name="ilosc" placeholder="Ilość" required>
+                <input class="form-input" type="number" name="cena" placeholder="Cena sprzedaży" step="0.01" required>
+                <button class="btn btn-success" type="submit">Sprzedaj</button>
+            </form>
+
+            <!-- Formularz zmiany salda -->
+            <form method="post" class="form-group mt-2">
+                <h4>Zmiana salda</h4>
+                <input type="hidden" name="akcja" value="saldo">
+                <input class="form-input" type="number" name="zmiana" placeholder="Kwota (może być ujemna)" step="0.01" required>
+                <button class="btn btn-warning" type="submit">Zmień saldo</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="mt-4">
+        <a href="{{ url_for('historia') }}" class="btn btn-link">Zobacz historię operacji</a>
+    </footer>
+</body>
+</html>
